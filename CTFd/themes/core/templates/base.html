@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{{ title or Configs.ctf_name }}</title>
+  <title>{{ title or "CTF-Farning" }}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="{{ Configs.ctf_small_icon }}" type="image/x-icon">
+  <link rel="shortcut icon" href="{{ url_for('views.themes_beta', theme='core', path='assets/favicon.svg') }}" type="image/svg+xml">
+  <link rel="icon" href="{{ url_for('views.themes_beta', theme='core', path='assets/favicon.svg') }}" type="image/svg+xml">
 
   {{ meta | safe }}
 
@@ -49,13 +50,16 @@
 
 {% include "components/snackbar.html" %}
 
-<footer class="footer">
-  <div class="container text-center">
-    <a href="https://ctfd.io" class="text-secondary">
-      <small class="text-muted">
-        {% trans %}Powered by CTFd{% endtrans %}
-      </small>
-    </a>
+<footer class="footer" style="border-top: 1px solid rgba(0, 0, 0, 0.22); margin-top: 40px; padding-top: 20px;">
+  <div class="container">
+    <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 text-center text-md-start">
+      <img src="{{ url_for('views.themes_beta', theme='core', path='assets/farning_logo.svg') }}" alt="Farning" height="38" style="background-color: white; padding: 4px; border-radius: 5px;">
+      <div>
+        <small class="text-muted">
+          {% trans %}Developed by <a href="https://farning.de">Farning</a>{% endtrans %}
+        </small>
+      </div>
+    </div>
   </div>
 </footer>
 

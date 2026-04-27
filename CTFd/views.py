@@ -189,7 +189,7 @@ def setup():
             page = Pages(title=ctf_name, route="index", content="", draft=False)
 
             # Upload banner
-            default_ctf_banner_location = url_for("views.themes", path="img/logo.png")
+            default_ctf_banner_location = url_for("views.themes_beta", theme="core", path="assets/farning_logo.svg")
             ctf_banner = request.files.get("ctf_banner")
             if ctf_banner:
                 f = upload_file(file=ctf_banner, page_id=page.id)
@@ -199,17 +199,13 @@ def setup():
             # Splice in our banner
             index = f"""<div class="row">
     <div class="col-md-6 offset-md-3">
-        <img class="w-100 mx-auto d-block" style="max-width: 500px;padding: 50px;padding-top: 14vh;" src="{default_ctf_banner_location}" />
+        <!--<img class="w-100 mx-auto d-block" style="max-width: 500px;padding: 50px;padding-top: 14vh;" src="{default_ctf_banner_location}" />-->
         <h3 class="text-center">
-            <p>A cool CTF platform from <a href="https://ctfd.io">ctfd.io</a></p>
-            <p>Follow us on social media:</p>
-            <a href="https://twitter.com/ctfdio"><i class="fab fa-twitter fa-2x" aria-hidden="true"></i></a>&nbsp;
-            <a href="https://facebook.com/ctfdio"><i class="fab fa-facebook fa-2x" aria-hidden="true"></i></a>&nbsp;
-            <a href="https://github.com/ctfd"><i class="fab fa-github fa-2x" aria-hidden="true"></i></a>
+            <p>CTF platform developed by <a href="https://farning.de">Farning</a></p>
         </h3>
         <br>
         <h4 class="text-center">
-            <a href="admin">Click here</a> to login and setup your CTF
+            <a href="admin">Click here</a> to login
         </h4>
     </div>
 </div>"""
@@ -354,6 +350,9 @@ def static_html(route):
     :param route:
     :return:
     """
+    if route == "index":
+        return redirect(url_for("auth.login"))
+
     page = get_page(route)
     if page is None:
         abort(404)

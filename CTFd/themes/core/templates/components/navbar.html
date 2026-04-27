@@ -1,16 +1,37 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+{% set page_title = '' %}
+{% if 'challenges' in request.endpoint %}
+{% set page_title = 'Challenges' %}
+{% elif 'users' in request.endpoint and 'private' not in request.endpoint %}
+{% set page_title = 'Users' %}
+{% elif 'teams' in request.endpoint and 'private' not in request.endpoint %}
+{% set page_title = 'Teams' %}
+{% elif 'scoreboard' in request.endpoint %}
+{% set page_title = 'Scoreboard' %}
+{% elif 'notifications' in request.endpoint %}
+{% set page_title = 'Notifications' %}
+{% elif 'settings' in request.endpoint %}
+{% set page_title = 'Settings' %}
+{% else %}
+{% set page_title = 'CTF - Farning' %}
+{% endif %}
+
+<header class="header" id="main-header" style="padding: 1rem 0; text-align: center; background: #000000; color: white; margin-bottom: 0; position: sticky; top: 0; z-index: 1030; transition: transform 0.3s ease;">
   <div class="container">
-    <a href="{{ url_for('views.static_html', route='/') }}" class="navbar-brand">
-      {% if Configs.ctf_logo %}
-        <img
-            class="img-responsive ctf_logo"
-            src="{{ url_for('views.files', path=Configs.ctf_logo) }}"
-            alt="{{ Configs.ctf_name }}"
-            height="25"
-        >
-      {% else %}
-        {{ Configs.ctf_name }}
-      {% endif %}
+    <h1 style="font-size: 1.5rem; margin: 0;">{{ page_title }}</h1>
+  </div>
+</header>
+
+<nav class="navbar navbar-expand-md navbar-light bg-white" style="background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(10px); box-shadow: 0 2px 14px rgba(0, 0, 0, 0.12); position: sticky; top: 0; z-index: 1020;">
+  <div class="container">
+    <a href="https://farning.de" class="navbar-brand">
+      <img
+          class="img-responsive ctf_logo"
+          src="{{ url_for('views.themes_beta', theme='core', path='assets/farning_logo.svg') }}"
+          alt="Farning"
+          height="25"
+          style="background-color: white; padding: 4px; border-radius: 5px;"
+      >
+      <span class="visually-hidden">CTF - Farning</span>
     </a>
 
     <button
@@ -24,7 +45,7 @@
       <ul class="navbar-nav me-auto">
         {% for page in Plugins.user_menu_pages %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ page.route }}" {% if page.link_target %}target="{{ page.link_target }}"{% endif %}>
+            <a class="nav-link" href="{{ page.route }}" {% if page.link_target %}target="{{ page.link_target }}"{% endif %} style="color: #2d3748 !important;">
               {{ page.title }}
             </a>
           </li>
@@ -32,14 +53,14 @@
 
         {% if Configs.account_visibility != 'admins' %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('users.listing') }}">
+            <a class="nav-link" href="{{ url_for('users.listing') }}" style="color: #2d3748 !important;">
               {% trans %}Users{% endtrans %}
             </a>
           </li>
 
           {% if Configs.user_mode == 'teams' %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('teams.listing') }}">
+              <a class="nav-link" href="{{ url_for('teams.listing') }}" style="color: #2d3748 !important;">
                 {% trans %}Teams{% endtrans %}
               </a>
             </li>
@@ -48,14 +69,14 @@
 
         {% if Configs.account_visibility != 'admins' and Configs.score_visibility != 'admins' %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('scoreboard.listing') }}">
+            <a class="nav-link" href="{{ url_for('scoreboard.listing') }}" style="color: #2d3748 !important;">
               {% trans %}Scoreboard{% endtrans %}
             </a>
           </li>
         {% endif %}
 
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('challenges.listing') }}">
+          <a class="nav-link" href="{{ url_for('challenges.listing') }}" style="color: #2d3748 !important;">
             {% trans %}Challenges{% endtrans %}
           </a>
         </li>
@@ -68,7 +89,7 @@
 
           {% if is_admin() %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('admin.view') }}">
+              <a class="nav-link" href="{{ url_for('admin.view') }}" style="color: #2d3748 !important;">
                 <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Admin Panel{% endtrans %}">
                     <i class="fas fa-wrench d-none d-md-inline d-lg-none"></i>
                 </span>
@@ -81,7 +102,7 @@
           {% endif %}
 
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('views.notifications') }}">
+            <a class="nav-link" href="{{ url_for('views.notifications') }}" style="color: #2d3748 !important;">
               <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Notifications{% endtrans %}">
                 <i class="fas fa-bell d-none d-md-inline d-lg-none"></i>
               </span>
@@ -95,7 +116,7 @@
 
           {% if Configs.user_mode == "teams" %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('teams.private') }}">
+              <a class="nav-link" href="{{ url_for('teams.private') }}" style="color: #2d3748 !important;">
                 <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Team{% endtrans %}">
                   <i class="fas fa-users d-none d-md-inline d-lg-none"></i>
                 </span>
@@ -108,7 +129,7 @@
           {% endif %}
 
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('users.private') }}">
+            <a class="nav-link" href="{{ url_for('users.private') }}" style="color: #2d3748 !important;">
               <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Profile{% endtrans %}">
                 <i class="fas fa-user-circle d-none d-md-inline d-lg-none"></i>
               </span>
@@ -120,7 +141,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('views.settings') }}">
+            <a class="nav-link" href="{{ url_for('views.settings') }}" style="color: #2d3748 !important;">
               <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Settings{% endtrans %}">
                 <i class="fas fa-cogs d-none d-md-inline d-lg-none"></i>
               </span>
@@ -132,7 +153,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.logout') }}">
+            <a class="nav-link" href="{{ url_for('auth.logout') }}" style="color: #2d3748 !important;">
               <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Logout{% endtrans %}">
                 <i class="fas fa-sign-out-alt d-none d-md-inline d-lg-none"></i>
               </span>
@@ -147,7 +168,7 @@
 
           {% if registration_visible() %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('auth.register') }}">
+              <a class="nav-link" href="{{ url_for('auth.register') }}" style="color: #2d3748 !important;">
                 <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Register{% endtrans %}">
                   <i class="fas fa-user-plus d-none d-md-inline d-lg-none"></i>
                 </span>
@@ -160,7 +181,7 @@
           {% endif %}
 
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.login') }}">
+            <a class="nav-link" href="{{ url_for('auth.login') }}" style="color: #2d3748 !important;">
               <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Login{% endtrans %}">
                 <i class="fas fa-sign-in-alt d-none d-md-inline d-lg-none"></i>
               </span>
@@ -172,7 +193,7 @@
           </li>
         {% endif %}
 
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
           <button class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-language d-none d-md-inline"></i>
             <span class="d-sm-inline d-md-none">
@@ -192,10 +213,10 @@
               {%- endfor %}
             </ul>
           </form>
-        </li>
+        </li> -->
 
         <li class="nav-item">
-          <button class="nav-link theme-switch" type="button">
+          <button class="nav-link theme-switch" type="button" style="color: #2d3748 !important;">
             <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans %}Toggle theme{% endtrans %}">
               <i class="fas fa-sun d-none d-md-inline"></i>
             </span>
@@ -209,3 +230,24 @@
     </div>
   </div>
 </nav>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const header = document.getElementById('main-header');
+  let lastScrollTop = 0;
+
+  window.addEventListener('scroll', function() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+      // Scrolling down
+      header.style.transform = 'translateY(-100%)';
+    } else {
+      // Scrolling up
+      header.style.transform = 'translateY(0)';
+    }
+
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+  });
+});
+</script>
