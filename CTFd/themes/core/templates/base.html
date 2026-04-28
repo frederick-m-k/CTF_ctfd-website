@@ -14,6 +14,14 @@
   {% endblock %}
 
   {{ Plugins.styles }}
+  <style>
+    a,
+    a img,
+    a span,
+    a i {
+      cursor: pointer;
+    }
+  </style>
 
   {{ Assets.js("assets/js/color_mode_switcher.js", type=None) }}
 
@@ -52,13 +60,21 @@
 
 <footer class="footer" style="border-top: 1px solid rgba(0, 0, 0, 0.22); margin-top: 40px; padding-top: 20px;">
   <div class="container">
-    <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 text-center text-md-start">
-      <img src="{{ url_for('views.themes_beta', theme='core', path='assets/farning_logo.svg') }}" alt="Farning" height="38" style="background-color: white; padding: 4px; border-radius: 5px;">
-      <div>
-        <small class="text-muted">
-          {% trans %}Developed by <a href="https://farning.de">Farning</a>{% endtrans %}
-        </small>
+    <div class="d-flex flex-column flex-md-row align-items-center justify-content-center justify-content-md-between gap-3 text-center text-md-start">
+      <div class="d-flex flex-column flex-md-row align-items-center gap-2">
+        <img src="{{ url_for('views.themes_beta', theme='core', path='assets/farning_logo.svg') }}" alt="Farning" height="38" style="background-color: white; padding: 4px; border-radius: 5px;">
+        <div>
+          <small class="text-muted">
+            {% trans %}Developed by <a href="https://farning.de">Farning</a>{% endtrans %}
+          </small>
+        </div>
       </div>
+      <a href="https://www.instagram.com/farning_programmierschulen/" target="_blank" rel="noopener noreferrer" title="Follow us on Instagram" style="display: inline-flex; flex-direction: column; align-items: center; color: #E4405F; text-decoration: none;">
+        <span style="padding: 5px; background-color: white; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; margin-bottom: -25px;">
+          <i class="fab fa-instagram" style="font-size: 1.25rem;"></i>
+        </span>
+        <span style="margin-top: 0.35rem; font-size: 0.85rem; color: #E4405F;">Instagram</span>
+      </a>
     </div>
   </div>
 </footer>
